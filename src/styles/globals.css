@@ -1,0 +1,232 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-line/10;
+  }
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-bg font-sans text-fg antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-bg;
+  }
+  ::selection {
+    background: rgb(var(--c-violet) / 0.35);
+  }
+}
+
+@layer utilities {
+  /* Violet as text uses the AA-safe text step (see tokens.css). */
+  .text-violet {
+    color: rgb(var(--c-violet-text));
+  }
+}
+
+@layer components {
+  .chat-markdown > :first-child { margin-top: 0; }
+  .chat-markdown > :last-child { margin-bottom: 0; }
+  .chat-markdown p { margin: 0.75rem 0; white-space: pre-wrap; }
+  .chat-markdown :is(h1, h2, h3, h4, h5, h6) {
+    margin: 1.25rem 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.5;
+  }
+  .chat-markdown strong { font-weight: 700; }
+  .chat-markdown :is(ul, ol) { margin: 0.75rem 0; padding-left: 1.5rem; }
+  .chat-markdown ul { list-style: disc; }
+  .chat-markdown ol { list-style: decimal; }
+  .chat-markdown li { margin: 0.25rem 0; }
+  .chat-markdown li > p { margin: 0.25rem 0; }
+  .chat-markdown a { @apply text-violet underline underline-offset-4; }
+  .chat-markdown blockquote { @apply my-3 border-l-2 border-violet/40 pl-4 text-fg-muted; }
+  .chat-markdown hr { @apply my-5 border-line/15; }
+  .chat-markdown code { @apply rounded bg-line/5 px-1.5 py-0.5 font-mono text-xs; }
+  .chat-markdown pre { @apply my-3 max-w-full overflow-x-auto rounded-md border border-line/10 bg-bg/60 p-4; }
+  .chat-markdown pre code { padding: 0; background: transparent; white-space: pre; }
+  .chat-table-scroll { max-width: 100%; overflow-x: auto; margin: 0.75rem 0; }
+  .chat-markdown table { width: 100%; border-collapse: collapse; }
+  .chat-markdown :is(th, td) { @apply border border-line/15 px-3 py-2 text-left; }
+  .chat-markdown th { @apply bg-line/5 font-semibold; }
+
+  .ai-chat-page {
+    height: calc(100dvh - var(--topbar-h));
+  }
+
+  /* Holographic glass panel */
+  .glass {
+    position: relative;
+    background: rgb(var(--c-surface) / var(--glass-alpha));
+    border: 1px solid rgb(var(--c-border) / var(--border-alpha));
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(18px) saturate(140%);
+    -webkit-backdrop-filter: blur(18px) saturate(140%);
+  }
+  .glass-strong {
+    @apply glass;
+    background: rgb(var(--c-bg-elevated) / 0.85);
+  }
+  .text-gradient {
+    background: var(--grad-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  /* Gradient hairline border for active / featured elements */
+  .glow-border {
+    position: relative;
+  }
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: var(--grad-brand);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0.7;
+  }
+  .live-dot {
+    @apply inline-block h-2 w-2 rounded-full bg-success animate-pulse-live;
+  }
+  /* Range slider with gradient fill; --pct is set inline by <Slider>. */
+  .af-range {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, rgb(var(--c-violet)) 0%, rgb(var(--c-cyan)) var(--pct, 50%), rgb(var(--c-border) / 0.12) var(--pct, 50%));
+    cursor: pointer;
+  }
+  .af-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    background: #fff;
+    border: 2px solid rgb(var(--c-violet));
+    box-shadow: 0 0 12px rgb(var(--c-violet) / 0.6);
+  }
+  .af-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: #fff;
+    border: 2px solid rgb(var(--c-violet));
+    box-shadow: 0 0 12px rgb(var(--c-violet) / 0.6);
+  }
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(var(--c-border) / 0.15) transparent;
+  }
+}
+
+/* Reduced motion: global kill-switch (system pref or in-app toggle). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+html[data-reduced-motion='true'] *,
+html[data-reduced-motion='true'] *::before,
+html[data-reduced-motion='true'] *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+
+/* Print: only the element marked .print-area (used for PDF export of briefings). */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+  .print-area {
+    position: absolute;
+    inset: 0;
+    background: #fff !important;
+    color: #000 !important;
+  }
+}
+
+/* React Flow, themed with design tokens (org chart). */
+.react-flow {
+  --xy-background-color: transparent;
+  --xy-node-background-color: transparent;
+  --xy-node-border: none;
+  --xy-node-boxshadow-selected: none;
+  --xy-edge-label-background-color: rgb(var(--c-bg-elevated));
+  --xy-edge-label-color: rgb(var(--c-fg-muted));
+  --xy-minimap-background-color: rgb(var(--c-bg-elevated) / 0.9);
+  --xy-attribution-background-color: transparent;
+}
+.react-flow__node-department,
+.react-flow__node-agent,
+.react-flow__node-teamAgent,
+.react-flow__node-owner {
+  padding: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+.react-flow__node:focus-visible {
+  outline: 2px solid rgb(var(--c-ring));
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+.org-edge-owner .react-flow__edge-path {
+  stroke: rgb(var(--c-border) / 0.22);
+  stroke-width: 1.5;
+}
+.org-edge-handoff .react-flow__edge-path {
+  stroke: rgb(var(--c-violet) / 0.55);
+  stroke-width: 2;
+}
+.org-edge-handoff.active .react-flow__edge-path {
+  stroke: rgb(var(--c-violet));
+}
+.react-flow__attribution {
+  background: transparent;
+  opacity: 0.5;
+  font-size: 9px;
+}
+.react-flow__attribution a {
+  color: rgb(var(--c-fg-subtle));
+}
+.react-flow__edge-textbg {
+  rx: 6;
+}
+.react-flow__edge-text {
+  font-family: 'JetBrains Mono Variable', monospace;
+  font-size: 10px;
+}

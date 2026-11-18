@@ -1,0 +1,128 @@
+/*
+ * AgentForge design tokens — the single source of truth for colour, radius,
+ * shadow and motion. Colours are stored as space-separated RGB channels so
+ * Tailwind can apply opacity modifiers (e.g. bg-violet/20).
+ * Components must never hardcode colours; use these tokens via Tailwind.
+ */
+
+:root {
+  /* Brand accents. Light theme uses deeper steps of the same hues so accent
+     text meets WCAG AA (>= 4.5:1) on light surfaces; the dark theme below uses
+     the exact brand values. */
+  --c-violet: 109 40 217; /* #6D28D9 */
+  --c-cyan: 14 116 144; /* #0E7490 */
+  --c-magenta: 190 24 93; /* #BE185D */
+  --c-violet-text: 109 40 217;
+
+  /* Semantic */
+  --c-success: 4 120 87; /* #047857 */
+  --c-warning: 180 83 9; /* #B45309 */
+  --c-danger: 185 28 28; /* #B91C1C */
+
+  /* Light theme surfaces (dark overrides below) */
+  --c-bg: 244 246 252;
+  --c-bg-elevated: 255 255 255;
+  --c-surface: 255 255 255; /* used at low alpha for glass */
+  --c-fg: 12 16 32;
+  --c-fg-muted: 76 84 110;
+  --c-fg-subtle: 98 106 130;
+  --c-border: 15 23 42; /* used at low alpha */
+  --c-ring: 124 77 235;
+  --c-grid: 99 102 241;
+
+  --glass-alpha: 0.72;
+  --border-alpha: 0.1;
+  --aurora-alpha: 0.22;
+  --grid-alpha: 0.07;
+
+  /* Chart series (validated categorical palette: CVD + normal-vision checks).
+     Fixed order; colour follows the entity, never its rank. Light steps. */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --series-4: #eda100;
+  --series-5: #e87ba4;
+  --series-6: #008300;
+  --series-7: #4a3aa7;
+  --series-8: #e34948;
+  --series-other: #8a8f9f;
+
+  /* Delivery previews: a "paper" email surface and a WhatsApp-style chat. */
+  --c-paper: 255 255 255;
+  --c-paper-alt: 248 250 252;
+  --c-ink: 30 41 59;
+  --c-ink-muted: 100 116 139;
+  --c-chat-head: 7 94 84;
+  --c-chat-bg: 11 20 26;
+  --c-chat-out: 0 92 75;
+  --c-chat-in: 32 44 51;
+  --c-chat-text: 233 237 239;
+  --c-chat-meta: 134 150 160;
+  --c-chat-link: 83 189 235;
+  --c-chat-line: 42 57 66;
+
+  /* Radius */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+
+  /* Elevation */
+  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.6) inset, 0 10px 30px -12px rgb(15 23 42 / 0.18);
+  --shadow-glow-violet: 0 0 0 1px rgb(var(--c-violet) / 0.35), 0 0 28px -4px rgb(var(--c-violet) / 0.45);
+  --shadow-glow-cyan: 0 0 0 1px rgb(var(--c-cyan) / 0.35), 0 0 28px -4px rgb(var(--c-cyan) / 0.45);
+
+  /* Gradients */
+  --grad-brand: linear-gradient(120deg, rgb(var(--c-violet)) 0%, rgb(var(--c-cyan)) 55%, rgb(var(--c-magenta)) 100%);
+  --grad-primary: linear-gradient(135deg, rgb(var(--c-violet)) 0%, rgb(99 102 241) 50%, rgb(var(--c-cyan)) 100%);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+
+  /* Layout */
+  --sidebar-w: 72px;
+  --sidebar-w-open: 248px;
+  --topbar-h: 64px;
+}
+
+.dark {
+  --c-violet: 139 92 246; /* #8B5CF6 */
+  --c-cyan: 34 211 238; /* #22D3EE */
+  --c-magenta: 244 114 182; /* #F472B6 */
+  --c-success: 52 211 153; /* #34D399 */
+  --c-warning: 251 191 36; /* #FBBF24 */
+  --c-danger: 248 113 113; /* #F87171 */
+  /* Brand violet is 4.3:1 on dark cards; small violet text uses a lighter step for AA. */
+  --c-violet-text: 167 139 250; /* #A78BFA */
+
+  --c-bg: 7 10 19; /* #070A13 */
+  --c-bg-elevated: 12 16 30;
+  --c-surface: 22 28 48;
+  --c-fg: 236 240 255;
+  --c-fg-muted: 158 168 199;
+  --c-fg-subtle: 132 142 174;
+  --c-border: 255 255 255;
+  --c-ring: 167 139 250;
+  --c-grid: 139 92 246;
+
+  --glass-alpha: 0.42;
+  --border-alpha: 0.1;
+  --aurora-alpha: 0.16;
+  --grid-alpha: 0.09;
+
+  /* Dark steps of the same eight hues, validated against the dark card surface. */
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --series-4: #c98500;
+  --series-5: #d55181;
+  --series-6: #008300;
+  --series-7: #9085e9;
+  --series-8: #e66767;
+  --series-other: #6b7286;
+
+  --shadow-card: 0 1px 0 0 rgb(255 255 255 / 0.07) inset, 0 20px 40px -20px rgb(0 0 0 / 0.7);
+}
